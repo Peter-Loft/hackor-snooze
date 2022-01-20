@@ -66,7 +66,7 @@ async function createAndAddNewStory(evt) {
   console.log("newstory object & currentUser obj:", newStory, currentUser);
 
   $("new-story-form").hide();
-  await StoryList.addStory(currentUser, newStory);
+  await storyList.addStory(currentUser, newStory);
   await getAndShowStoriesOnStart();
 }
 
