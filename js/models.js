@@ -73,8 +73,8 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory(user, newStory) {
-    // UNIMPLEMENTED: complete this function!
+  static async addStory(user, newStory) {
+    console.log("same info passed",user,newStory);
     const userToken = user.loginToken;
     let { author, title, url } = newStory;
     const response = await axios.post(`${BASE_URL}/stories`,
@@ -86,7 +86,6 @@ class StoryList {
             url,
           }
       });
-      console.log(response, "response.story: ", response.data.story);
     return new Story(response.data.story);
   }
 }

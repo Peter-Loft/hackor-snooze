@@ -50,3 +50,24 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+
+/**Function to be called upon submitting new story form, creates
+ * story and adds to backend. Then repopulates stories-container.
+ */
+
+async function createAndAddNewStory(evt) {
+  evt.preventDefault();
+  const newStory = {
+    title: $("#new-story-title").val(),
+    url: $("#new-story-url").val(),
+    author: $("#new-story-author").val(),
+  };
+  console.log("newstory object & currentUser obj:", newStory, currentUser);
+
+  $("new-story-form").hide();
+  await StoryList.addStory(currentUser, newStory);
+  await getAndShowStoriesOnStart();
+}
+
+$newStoryForm.on('click', "button", createAndAddNewStory);
