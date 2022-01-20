@@ -25,6 +25,16 @@ function navLoginClick(evt) {
 
 $navLogin.on("click", navLoginClick);
 
+/**Clear the stories container, populate with add story form */
+
+function navSubmitClick(evt){
+  console.debug("navSubmitClick", evt);
+  hidePageComponents();
+  $newStoryForm.show();
+}
+
+$navSubmit.on("click", navSubmitClick);
+
 /** When a user first logins in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {
