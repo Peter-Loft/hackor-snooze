@@ -219,7 +219,7 @@ class User {
   */
 
   async favoriteStory(story) {
-    console.log("user's favorites: ", this.favorites);
+    
     const storyId = story.storyId;
     const username = this.username;
     this.favorites.push(story);
@@ -231,7 +231,7 @@ class User {
         token: this.loginToken,
       }
     });
-
+    // console.log("user's favorites: ", this.favorites);
   }
 
   /**Allows user to unfavorite a story 
@@ -243,7 +243,7 @@ class User {
     const username = this.username;
     const favorites = this.favorites;
 
-    console.log("user's favorites: ", favorites);
+    // console.log("user's favorites: ", favorites);
 
     const response = await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
@@ -257,7 +257,7 @@ class User {
     const index = favorites.indexOf(story);
     favorites.splice(index, 1);
 
-    console.log("User's favorites after deletion: ", favorites);
+    // console.log("User's favorites after deletion: ", favorites);
 
   }
 

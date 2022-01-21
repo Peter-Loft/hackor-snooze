@@ -3,6 +3,7 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
+
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
@@ -25,12 +26,15 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
 
   //assign favorite icon based on usuer's favorites
-  const starIcon = currentUser.favorites.includes(story) ? "fas" : "far";
+
+  // const starIcon = currentUser.favorites.includes(story) ? "fas" : "far";
+  // ${getStarHTML(story, currentUser)}
+
   // add awesomefont icon to act as button above a href
   //TODO: Ask about div vs just throwing the font awesome
   return $(`
       <li id="${story.storyId}">
-        <i class="${starIcon} fa-star"></i>
+        <i class="${getStarHTML(story)} fa-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -99,25 +103,38 @@ function putFavoritesOnPage() {
 /** Toggle favorite -- when user clicks on fav star:
  *  if favorited, becomes unfavorited, and vice versa */
 
-async function toggleFavorite(evt){
+async function toggleFavorite(evt) {
   const $starClicked = $(evt.target);
   const storyId = $starClicked.closest("li").attr("id");
-  
-  
-  const targetStory = storyList.stories.find( s =>
+  console.log("what the id is: ", storyId);
+
+  const targetStory = storyList.stories.find(s =>
     s.storyId === storyId
   );
-  const storyFavStatus = 
-    currentUser.favorites.includes(targetStory) ? true : false;
-  if (storyFavStatus) {
-    //$starClicked.toggleClass("fas far");
+  console.log("what the story is: ", targetStory);
+  // const storyFavStatus = currentUser.favorites.includes(targetStory) ? true : false;
+  // console.log("the storyFavStatus: ", storyFavStatus);
+
+  if ($starClicked.hasClass("fas")) {
+    $starClicked.toggleClass("fas far");
     currentUser.unFavoriteStory(targetStory);
-    return;
   } else {
-    //$starClicked.toggleClass("far fas");
+    $starClicked.toggleClass("far fas");
     currentUser.favoriteStory(targetStory);
-    return;
   }
+  // call some function here to update star based off currentUser.favorites
 }
 
 $storiesContainer.on("click", ".fa-star", toggleFavorite);
+
+function getStarHTML(story) {
+  // function accepts story instance, checks it against currentUser.favorites
+  // if included then icon should be filled (i.e. favorited) and if not, left "normal"
+  // stars should react correspondingly
+  if (currentUser === undefined) { return "far" }
+  const isFavorite = currentUser.favorites.some(s => s.storyId === story.storyId);
+
+  if (isFavorite) { return "fas" }
+  else { return "far" }
+
+}
