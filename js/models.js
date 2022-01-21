@@ -73,24 +73,24 @@ class StoryList {
    * Returns the new Story instance
    */
 
-   //TODO:
-   //this.stories.push(new story [type object])
-   //destructure newStory in the args for addStory
+  //TODO:
+  //this.stories.push(new story [type object])
+  //destructure newStory in the args for addStory
 
   async addStory(user, newStory) {
-    console.log("same info passed",user,newStory);
+    console.log("same info passed", user, newStory);
     const userToken = user.loginToken;
     console.log("userToken: ", userToken)
     let { author, title, url } = newStory;
     console.log("newStory: ", newStory);
     const response = await axios.post(`${BASE_URL}/stories`,
       {
-          token: userToken,
-          story: {
-            author,
-            title,
-            url,
-          }
+        token: userToken,
+        story: {
+          author,
+          title,
+          url,
+        }
       });
     return new Story(response.data.story);
   }
@@ -217,24 +217,46 @@ class User {
 
   //TODO: Change axios request to use parameters instead of ugly url
   */
-  async favoriteStory(story){
+  async favoriteStory(story) {
     console.log("user's favorites: ", this.favorites);
     const storyId = story.storyId;
     const username = currentUser.username;
     this.favorites.push(story);
 
     const response = await axios({
-      url:`${BASE_URL}/users/${username}/favorites/${storyId}`,
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "POST",
-      data: { 
+      data: {
         token: currentUser.loginToken,
       }
     });
 
   }
 
+  //TODO: change currentuser to this
+  async unFavoriteStory(story) {
+    const storyId = story.storyId;
+    const username = currentUser.username;
+    const favorites = currentUser.favorites;
 
-} 
+    console.log("user's favorites: ", favorites);
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      method: "DELETE",
+      data: {
+        token: currentUser.loginToken,
+      }
+    });
+
+    const index = favorites.indexOf(story);
+    favorites.splice(index, 1);
+
+    console.log("User's favorites after deletion: ", favorites);
+
+  }
+
+}
 
 
 
