@@ -73,26 +73,25 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  //TODO:
-  //this.stories.push(new story [type object])
-  //destructure newStory in the args for addStory
-
-  async addStory(user, newStory) {
-    console.log("same info passed", user, newStory);
+  async addStory(user, { author, title, url }) {
+    
     const userToken = user.loginToken;
-    console.log("userToken: ", userToken)
-    let { author, title, url } = newStory;
-    console.log("newStory: ", newStory);
+    
     const response = await axios.post(`${BASE_URL}/stories`,
       {
-        token: userToken,
-        story: {
-          author,
-          title,
-          url,
-        }
-      });
-    return new Story(response.data.story);
+          token: userToken,
+          story: {
+            author,
+            title,
+            url,
+          }
+      }
+    );
+
+    const newStory = new Story(response.data.story);
+    this.stories.unshift(newStory);
+
+    return newStory;
   }
 }
 
