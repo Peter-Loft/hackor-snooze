@@ -24,6 +24,8 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  const visibility = currentUser === undefined ? "hidden" : "";
+
 
   //assign favorite icon based on usuer's favorites
 
@@ -34,7 +36,7 @@ function generateStoryMarkup(story) {
   //TODO: Ask about div vs just throwing the font awesome
   return $(`
       <li id="${story.storyId}">
-        <i class="${getStarHTML(story)} fa-star"></i>
+        <i class="${getStarHTML(story)} fa-star star ${visibility}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -58,6 +60,7 @@ function putStoriesOnPage() {
     $allStoriesList.append($story);
   }
 
+  //$(".star").show();
   $allStoriesList.show();
 }
 
@@ -96,7 +99,7 @@ function putFavoritesOnPage() {
     const $story = generateStoryMarkup(story);
     $allFavoriteStories.append($story);
   }
-
+  //$(".star").show();
   $allFavoriteStories.show();
 }
 
