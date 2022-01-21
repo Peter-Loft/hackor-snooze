@@ -211,4 +211,39 @@ class User {
       return null;
     }
   }
-}
+
+  /**Allows user to favorite a story 
+  * log favorite in memory and backend through the API
+
+  //TODO: Change axios request to use parameters instead of ugly url
+  */
+  async favoriteStory(story){
+    console.log("user's favorites: ", this.favorites);
+    const storyId = story.storyId;
+    const username = currentUser.username;
+    this.favorites.push(story);
+
+    const response = await axios({
+      url:`${BASE_URL}/users/${username}/favorites/${storyId}`,
+      method: "POST",
+      data: { 
+        token: currentUser.loginToken,
+      }
+    });
+
+  }
+
+
+} 
+
+
+
+
+//  static async signup(username, password, name) {
+//     const response = await axios({
+//       url: `${BASE_URL}/signup`,
+//       method: "POST",
+//       data: { user: { username, password, name } },
+//     });
+
+//     const { user } = response.data;
