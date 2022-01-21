@@ -56,6 +56,9 @@ function putStoriesOnPage() {
  * story and adds to backend. Then repopulates stories-container.
  */
 
+
+//TODO: replace getAndShow call -- assign return from addStory to variable,
+// pass to generate story markup, prepend to the DOM
 async function createAndAddNewStory(evt) {
   evt.preventDefault();
   const newStory = {
@@ -65,9 +68,9 @@ async function createAndAddNewStory(evt) {
   };
   console.log("newstory object & currentUser obj:", newStory, currentUser);
 
-  $("new-story-form").hide();
+  $newStoryForm.hide();
   await storyList.addStory(currentUser, newStory);
   await getAndShowStoriesOnStart();
 }
 
-$newStoryForm.on('click', "button", createAndAddNewStory);
+$newStoryForm.on('submit', createAndAddNewStory);

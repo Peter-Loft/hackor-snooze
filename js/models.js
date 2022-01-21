@@ -73,6 +73,10 @@ class StoryList {
    * Returns the new Story instance
    */
 
+   //TODO:
+   //this.stories.push(new story [type object])
+   //destructure newStory in the args for addStory
+
   async addStory(user, newStory) {
     console.log("same info passed",user,newStory);
     const userToken = user.loginToken;
