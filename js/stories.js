@@ -24,9 +24,10 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
   // add awesomefont icon to act as button above a href
+  //TODO: Ask about div vs just throwing the font awesome
   return $(`
       <li id="${story.storyId}">
-
+        <i class="far fa-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -91,3 +92,14 @@ function putFavoritesOnPage() {
 
   $allFavoriteStories.show();
 }
+
+/** Toggle favorite -- when user clicks on fav star:
+ *  if favorited, becomes unfavorited, and vice versa */
+
+async function toggleFavorite(evt){
+  const $starClicked = $(evt.target);
+  const storyId = $starClicked.closest("li").attr("id");
+  console.log("this story's id is: ", storyId);
+}
+
+$storiesContainer.on("click", ".fa-star", toggleFavorite);

@@ -215,6 +215,7 @@ class User {
   * log favorite in memory and backend API via POST request.
 
    TODO: ASK Change axios request to use parameters instead of ugly url
+   TODO: Change it so memory/UI does not update until we get the response from the database?
   */
 
   async favoriteStory(story) {
@@ -252,6 +253,7 @@ class User {
       }
     });
 
+    //TODO: Filter instead -- more conventional
     const index = favorites.indexOf(story);
     favorites.splice(index, 1);
 
