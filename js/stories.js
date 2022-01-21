@@ -111,18 +111,24 @@ async function toggleFavorite(evt) {
   const targetStory = storyList.stories.find(s =>
     s.storyId === storyId
   );
-  console.log("what the story is: ", targetStory);
-  // const storyFavStatus = currentUser.favorites.includes(targetStory) ? true : false;
-  // console.log("the storyFavStatus: ", storyFavStatus);
 
-  if ($starClicked.hasClass("fas")) {
-    $starClicked.toggleClass("fas far");
+  console.log("what the story is: ", targetStory);
+
+  // what the HECK why didn't this work?
+  // const storyFavStatus = currentUser.favorites.includes(targetStory) ? true : false;
+
+  const isFavorite = currentUser.favorites.some(s => s.storyId === targetStory.storyId);
+  console.log("the isFavorite: ", isFavorite);
+  
+  if (isFavorite) {
+    
     currentUser.unFavoriteStory(targetStory);
   } else {
-    $starClicked.toggleClass("far fas");
+    
     currentUser.favoriteStory(targetStory);
   }
-  // call some function here to update star based off currentUser.favorites
+  $starClicked.toggleClass("fas far");
+
 }
 
 $storiesContainer.on("click", ".fa-star", toggleFavorite);
