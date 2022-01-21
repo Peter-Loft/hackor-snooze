@@ -99,7 +99,22 @@ function putFavoritesOnPage() {
 async function toggleFavorite(evt){
   const $starClicked = $(evt.target);
   const storyId = $starClicked.closest("li").attr("id");
-  console.log("this story's id is: ", storyId);
+  
+  
+  const targetStory = storyList.stories.find( s =>
+    s.storyId === storyId
+  );
+  const storyFavStatus = 
+    currentUser.favorites.includes(targetStory) ? true : false;
+  if (storyFavStatus) {
+    $starClicked.toggleClass("fas far");
+    currentUser.unFavoriteStory(targetStory);
+    return;
+  } else {
+    $starClicked.toggleClass("far fas");
+    currentUser.favoriteStory(targetStory);
+    return;
+  }
 }
 
 $storiesContainer.on("click", ".fa-star", toggleFavorite);
