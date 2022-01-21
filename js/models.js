@@ -74,17 +74,17 @@ class StoryList {
    */
 
   async addStory(user, { author, title, url }) {
-    
+
     const userToken = user.loginToken;
-    
+
     const response = await axios.post(`${BASE_URL}/stories`,
       {
-          token: userToken,
-          story: {
-            author,
-            title,
-            url,
-          }
+        token: userToken,
+        story: {
+          author,
+          title,
+          url,
+        }
       }
     );
 
@@ -212,10 +212,11 @@ class User {
   }
 
   /**Allows user to favorite a story 
-  * log favorite in memory and backend through the API
+  * log favorite in memory and backend API via POST request.
 
-  //TODO: Change axios request to use parameters instead of ugly url
+   TODO: ASK Change axios request to use parameters instead of ugly url
   */
+
   async favoriteStory(story) {
     console.log("user's favorites: ", this.favorites);
     const storyId = story.storyId;
@@ -232,7 +233,10 @@ class User {
 
   }
 
-  //TODO: change currentuser to this
+  /**Allows user to unfavorite a story 
+  * removes favorite in memory and backend API via DELETE request.
+  * TODO: create handler function to toggle favorite status.
+  */
   async unFavoriteStory(story) {
     const storyId = story.storyId;
     const username = this.username;

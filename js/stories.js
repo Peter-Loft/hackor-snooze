@@ -23,8 +23,10 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  // add awesomefont icon to act as button above a href
   return $(`
       <li id="${story.storyId}">
+
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -53,12 +55,8 @@ function putStoriesOnPage() {
 
 
 /**Function to be called upon submitting new story form, creates
- * story and adds to backend. Then repopulates stories-container.
+ * story and POSTs to backend. Then updates stories-container.
  */
-
-
-//TODO: replace getAndShow call -- assign return from addStory to variable,
-// pass to generate story markup, prepend to the DOM
 async function createAndAddNewStory(evt) {
   evt.preventDefault();
   const newStory = {
@@ -77,7 +75,9 @@ async function createAndAddNewStory(evt) {
 
 $newStoryForm.on('submit', createAndAddNewStory);
 
-
+/** Empties the favoriteStories list, then adds
+ * currentUser's favorites to DOM, redisplays.
+ */
 function putFavoritesOnPage() {
   console.debug("putFavoritesOnPage");
 

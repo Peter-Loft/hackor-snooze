@@ -29,7 +29,7 @@ $navLogin.on("click", navLoginClick);
 
 /**Clear the stories container, populate with add story form */
 
-function navSubmitClick(evt){
+function navSubmitClick(evt) {
   console.debug("navSubmitClick", evt);
   hidePageComponents();
   $newStoryForm.show();
@@ -47,12 +47,12 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
-/** added */
-function navFavoritesClick(evt){
+/** function clears all components and displays favorites list */
+
+function navFavoritesClick(evt) {
   console.debug("navSubmitClick", evt);
   hidePageComponents();
   putFavoritesOnPage();
-  // $allFavoriteStories.show();
 }
 
 $navFavorites.on("click", navFavoritesClick);
