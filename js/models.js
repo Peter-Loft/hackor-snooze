@@ -219,14 +219,14 @@ class User {
   async favoriteStory(story) {
     console.log("user's favorites: ", this.favorites);
     const storyId = story.storyId;
-    const username = currentUser.username;
+    const username = this.username;
     this.favorites.push(story);
 
     const response = await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "POST",
       data: {
-        token: currentUser.loginToken,
+        token: this.loginToken,
       }
     });
 
@@ -235,8 +235,8 @@ class User {
   //TODO: change currentuser to this
   async unFavoriteStory(story) {
     const storyId = story.storyId;
-    const username = currentUser.username;
-    const favorites = currentUser.favorites;
+    const username = this.username;
+    const favorites = this.favorites;
 
     console.log("user's favorites: ", favorites);
 
@@ -244,7 +244,7 @@ class User {
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "DELETE",
       data: {
-        token: currentUser.loginToken,
+        token: this.loginToken,
       }
     });
 
@@ -256,15 +256,3 @@ class User {
   }
 
 }
-
-
-
-
-//  static async signup(username, password, name) {
-//     const response = await axios({
-//       url: `${BASE_URL}/signup`,
-//       method: "POST",
-//       data: { user: { username, password, name } },
-//     });
-
-//     const { user } = response.data;

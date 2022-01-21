@@ -76,3 +76,18 @@ async function createAndAddNewStory(evt) {
 }
 
 $newStoryForm.on('submit', createAndAddNewStory);
+
+
+function putFavoritesOnPage() {
+  console.debug("putFavoritesOnPage");
+
+  $allFavoriteStories.empty();
+
+  // loop through all of our stories and generate HTML for them
+  for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $allFavoriteStories.append($story);
+  }
+
+  $allFavoriteStories.show();
+}
