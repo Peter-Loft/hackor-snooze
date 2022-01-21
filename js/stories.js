@@ -23,11 +23,14 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+
+  //assign favorite icon based on usuer's favorites
+  const starIcon = currentUser.favorites.includes(story) ? "fas" : "far";
   // add awesomefont icon to act as button above a href
   //TODO: Ask about div vs just throwing the font awesome
   return $(`
       <li id="${story.storyId}">
-        <i class="far fa-star"></i>
+        <i class="${starIcon} fa-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -107,11 +110,11 @@ async function toggleFavorite(evt){
   const storyFavStatus = 
     currentUser.favorites.includes(targetStory) ? true : false;
   if (storyFavStatus) {
-    $starClicked.toggleClass("fas far");
+    //$starClicked.toggleClass("fas far");
     currentUser.unFavoriteStory(targetStory);
     return;
   } else {
-    $starClicked.toggleClass("far fas");
+    //$starClicked.toggleClass("far fas");
     currentUser.favoriteStory(targetStory);
     return;
   }
