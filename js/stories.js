@@ -69,8 +69,10 @@ async function createAndAddNewStory(evt) {
   console.log("newstory object & currentUser obj:", newStory, currentUser);
 
   $newStoryForm.hide();
-  await storyList.addStory(currentUser, newStory);
-  await getAndShowStoriesOnStart();
+  const newStoryInstance = await storyList.addStory(currentUser, newStory);
+  const formattedStory = generateStoryMarkup(newStoryInstance);
+  $allStoriesList.prepend(formattedStory);
+  $allStoriesList.show();
 }
 
 $newStoryForm.on('submit', createAndAddNewStory);
