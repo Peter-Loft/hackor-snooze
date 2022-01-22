@@ -46,15 +46,25 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navFavorites.show();
   $navSubmit.show();
+  $navMyStories.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
 /** function clears all components and displays favorites list */
 
 function navFavoritesClick(evt) {
-  console.debug("navSubmitClick", evt);
+  console.debug("navFavoritesClick", evt);
   hidePageComponents();
   putFavoritesOnPage();
 }
 
 $navFavorites.on("click", navFavoritesClick);
+
+function navMyStoriesClick(evt) {
+  console.debug("navMyStoriesClick", evt);
+  hidePageComponents();
+  putMyStoriesOnPage();
+}
+
+$navMyStories.on("click", navMyStoriesClick);
+

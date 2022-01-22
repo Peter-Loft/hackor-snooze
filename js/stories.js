@@ -95,6 +95,19 @@ function putFavoritesOnPage() {
   $allFavoriteStories.show();
 }
 
+function putMyStoriesOnPage() {
+  console.debug("putMyStoriesOnPage");
+
+  $allMyStories.empty();
+  for (let story of currentUser.ownStories) {
+    const $story = generateStoryMarkup(story);
+    $allMyStories.append($story);
+  }
+  //$(".star").show();
+  $allMyStories.show();
+
+}
+
 /** Toggle favorite -- when user clicks on fav star:
  *  if favorited, becomes unfavorited, and vice versa */
 
