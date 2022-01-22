@@ -22,10 +22,9 @@ class Story {
   }
 
   /** Parses hostname out of URL and returns it. */
-
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    const url = new URL(this.url);
+    return url.hostname;
   }
 }
 
@@ -213,9 +212,6 @@ class User {
 
   /**Allows user to favorite a story 
   * log favorite in memory and backend API via POST request.
-
-   TODO: ASK Change axios request to use parameters instead of ugly url
-   TODO: Change it so memory/UI does not update until we get the response from the database?
   */
 
   async favoriteStory(story) {
@@ -224,7 +220,7 @@ class User {
     const username = this.username;
     this.favorites.push(story);
 
-    const response = await axios({
+    await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "POST",
       data: {
@@ -236,7 +232,6 @@ class User {
 
   /**Allows user to unfavorite a story 
   * removes favorite in memory and backend API via DELETE request.
-  * TODO: create handler function to toggle favorite status.
   */
   async unFavoriteStory(story) {
     const storyId = story.storyId;
@@ -245,7 +240,7 @@ class User {
 
     // console.log("user's favorites: ", favorites);
 
-    const response = await axios({
+    await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "DELETE",
       data: {
@@ -253,11 +248,12 @@ class User {
       }
     });
 
-    //TODO: Filter instead -- more conventional
+    //Filter instead ? -- more conventional vs.
+    //(do I mean to point to something else?) ? then yes filter : no.
     const index = favorites.indexOf(story);
     favorites.splice(index, 1);
 
-    // console.log("User's favorites after deletion: ", favorites);
+    
 
   }
 

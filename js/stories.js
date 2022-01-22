@@ -21,22 +21,14 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
-  const visibility = currentUser === undefined ? "hidden" : "";
+  const showStar = currentUser === undefined ? false : true;
 
-
-  //assign favorite icon based on usuer's favorites
-
-  // const starIcon = currentUser.favorites.includes(story) ? "fas" : "far";
-  // ${getStarHTML(story, currentUser)}
-
-  // add awesomefont icon to act as button above a href
-  //TODO: Ask about div vs just throwing the font awesome
   return $(`
       <li id="${story.storyId}">
-        <i class="${getStarHTML(story)} fa-star star ${visibility}"></i>
+        ${showStar ? getStarHTML(story) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -122,12 +114,10 @@ async function toggleFavorite(evt) {
 
   const isFavorite = currentUser.favorites.some(s => s.storyId === targetStory.storyId);
   console.log("the isFavorite: ", isFavorite);
-  
+
   if (isFavorite) {
-    
     currentUser.unFavoriteStory(targetStory);
   } else {
-    
     currentUser.favoriteStory(targetStory);
   }
   $starClicked.toggleClass("fas far");
@@ -136,14 +126,19 @@ async function toggleFavorite(evt) {
 
 $storiesContainer.on("click", ".fa-star", toggleFavorite);
 
+/** accepts story instance, checks it against currentUser.favorites
+ * returns html tags for favorite icon.
+ */
 function getStarHTML(story) {
-  // function accepts story instance, checks it against currentUser.favorites
-  // if included then icon should be filled (i.e. favorited) and if not, left "normal"
-  // stars should react correspondingly
-  if (currentUser === undefined) { return "far" }
+
+  // TODO: turn into a method on user obj
   const isFavorite = currentUser.favorites.some(s => s.storyId === story.storyId);
 
-  if (isFavorite) { return "fas" }
-  else { return "far" }
+  if (isFavorite) {
+    return '<i class="fas fa-star star"></i>'
+  }
+  else {
+    return '<i class="far fa-star star"></i>'
+  }
 
 }
